@@ -1,0 +1,73 @@
+.App {
+  text-align: center;
+}
+
+/* .App-logo {
+  height: 40vmin;
+  pointer-events: none;
+} */
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-image: url("/public/star-wars.jpg");
+  background-size: cover; /* Arka plan resminin kaplamasını sağlar */
+  background-position: center; /* Arka plan resminin ortalanmasını sağlar */
+  min-height: 50vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.bg-dark {
+  background-color : rgba(0, 0, 0, 0)!important; /* Tamamen saydam siyah (RGBA: 0, 0, 0, 0) */
+
+}
+.navbar-dark .navbar-nav .nav-link {
+  color: #000;
+}
+
+/* Küçük ekranlar için: Opak arka plan */
+
+  @media (min-width: 320px) and (max-width: 750px) {
+  .bg-dark {
+    background-color: rgba(0, 0, 0, 1)!important; /* Siyah arka plan (RGBA: 0, 0, 0, 1 -> tamamen opak) */
+  }
+  .navbar-dark .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, .5);
+  }
+  .table{
+    font-size: 0.70rem;
+  }
+}
+.page-link {
+  color: white !important;
+  text-decoration: none;
+  background-color: #000 !important;
+}
+
+/* .page-link:hover {
+  color: #0003;
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #0003;
+  background-color: #000;
+} */
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
