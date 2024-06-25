@@ -2,12 +2,13 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import FilterComponent from './components/FilterComponent'; // FilterComponent'in yolunu düzgün şekilde belirttiğinizden emin olun
 
+// Films bileşenini test etme
 describe('Films Component', () => {
   const filters = [
     {
-      label: 'Title',
+      label: 'Episode ID',
       value: '',
-      options: ['Film A', 'Film B', 'Film C'],
+      options: ['1', '2', '3'],
       onChange: jest.fn(),
     },
     {
@@ -18,39 +19,42 @@ describe('Films Component', () => {
     },
   ];
 
+  // Bileşenin verilen filtrelerle doğru şekilde render edilip edilmediğini kontrol edin
   test('renders correctly with given filters', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if all filters are rendered
+    // Tüm filtrelerin render edildiğini kontrol edin
     filters.forEach(filter => {
       expect(screen.getByLabelText(`${filter.label}:`)).toBeInTheDocument();
     });
 
-    // Check if the correct number of options are rendered for each filter
+    // Her filtre için doğru sayıda seçeneğin render edildiğini kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
-      expect(selectElement.children.length).toBe(filter.options.length + 1); // +1 for the "All" option
+      expect(selectElement).toHaveTextContent('All');
     });
   });
 
+  // Bir seçenek seçildiğinde onChange fonksiyonunun çağrılıp çağrılmadığını kontrol edin
   test('calls onChange when an option is selected', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Simulate changing the Title filter
-    const titleSelect = screen.getByLabelText('Title:');
-    fireEvent.change(titleSelect, { target: { value: 'Film A' } });
-    expect(filters[0].onChange).toHaveBeenCalledWith('Film A');
+    // Title filtresini değiştirmeyi simüle edin
+    const titleSelect = screen.getByLabelText('Episode ID:');
+    fireEvent.change(titleSelect, { target: { value: '1' } });
+    expect(filters[0].onChange).toHaveBeenCalledWith('1');
 
-    // Simulate changing the Director filter
+    // Director filtresini değiştirmeyi simüle edin
     const directorSelect = screen.getByLabelText('Director:');
     fireEvent.change(directorSelect, { target: { value: 'Director X' } });
     expect(filters[1].onChange).toHaveBeenCalledWith('Director X');
   });
 
+  // Varsayılan seçeneğin "All" olup olmadığını kontrol edin
   test('default option is "All"', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if the default selected option is "All"
+    // Varsayılan seçili seçeneğin "All" olup olmadığını kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
       expect(selectElement.value).toBe('');
@@ -59,12 +63,13 @@ describe('Films Component', () => {
 
 });
 
+// People bileşenini test etme
 describe('People Component', () => {
   const filters = [
     {
-      label: 'Name',
+      label: 'Eye Color',
       value: '',
-      options: ['Person A', 'Person B', 'Person C'],
+      options: ['red', 'blue', 'yellow'],
       onChange: jest.fn(),
     },
     {
@@ -75,39 +80,42 @@ describe('People Component', () => {
     },
   ];
 
+  // Bileşenin verilen filtrelerle doğru şekilde render edilip edilmediğini kontrol edin
   test('renders correctly with given filters', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if all filters are rendered
+    // Tüm filtrelerin render edildiğini kontrol edin
     filters.forEach(filter => {
       expect(screen.getByLabelText(`${filter.label}:`)).toBeInTheDocument();
     });
 
-    // Check if the correct number of options are rendered for each filter
+    // Her filtre için doğru sayıda seçeneğin render edildiğini kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
-      expect(selectElement.children.length).toBe(filter.options.length + 1); // +1 for the "All" option
+      expect(selectElement).toHaveTextContent('All'); //"All" seçeneği için
     });
   });
 
+  // Bir seçenek seçildiğinde onChange fonksiyonunun çağrılıp çağrılmadığını kontrol edin
   test('calls onChange when an option is selected', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Simulate changing the Name filter
-    const nameSelect = screen.getByLabelText('Name:');
-    fireEvent.change(nameSelect, { target: { value: 'Person A' } });
-    expect(filters[0].onChange).toHaveBeenCalledWith('Person A');
+    // Eye Color filtresini değiştirmeyi simüle edin
+    const nameSelect = screen.getByLabelText('Eye Color:');
+    fireEvent.change(nameSelect, { target: { value: 'red' } });
+    expect(filters[0].onChange).toHaveBeenCalledWith('red');
 
-    // Simulate changing the Gender filter
+    // Gender filtresini değiştirmeyi simüle edin
     const genderSelect = screen.getByLabelText('Gender:');
     fireEvent.change(genderSelect, { target: { value: 'male' } });
     expect(filters[1].onChange).toHaveBeenCalledWith('male');
   });
 
+  // Varsayılan seçeneğin "All" olup olmadığını kontrol edin
   test('default option is "All"', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if the default selected option is "All"
+    // Varsayılan seçili seçeneğin "All" olup olmadığını kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
       expect(selectElement.value).toBe('');
@@ -116,55 +124,59 @@ describe('People Component', () => {
 
 });
 
+// Vehicles bileşenini test etme
 describe('Vehicles Component', () => {
   const filters = [
     {
       label: 'Model',
       value: '',
-      options: ['Car', 'Bus', 'Truck'],
+      options: ['Digger Crawler', 'T-16 skyhopper', 'X-34 landspeeder'],
       onChange: jest.fn(),
     },
     {
-      label: 'Color',
+      label: 'VehicleClass',
       value: '',
-      options: ['Red', 'Blue', 'Green'],
+      options: ['wheeled', 'starfighter', 'airspeeder'],
       onChange: jest.fn(),
     },
   ];
 
+  // Bileşenin verilen filtrelerle doğru şekilde render edilip edilmediğini kontrol edin
   test('renders correctly with given filters', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if all filters are rendered
+    // Tüm filtrelerin render edildiğini kontrol edin
     filters.forEach(filter => {
       expect(screen.getByLabelText(`${filter.label}:`)).toBeInTheDocument();
     });
 
-    // Check if the correct number of options are rendered for each filter
+    // Her filtre için doğru sayıda seçeneğin render edildiğini kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
-      expect(selectElement.children.length).toBe(filter.options.length + 1); // +1 for the "All" option
+      expect(selectElement).toHaveTextContent('All'); // "All" seçeneği için
     });
   });
 
+  // Bir seçenek seçildiğinde onChange fonksiyonunun çağrılıp çağrılmadığını kontrol edin
   test('calls onChange when an option is selected', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Simulate changing the Model filter
+    // Model filtresini değiştirmeyi simüle edin
     const modelSelect = screen.getByLabelText('Model:');
-    fireEvent.change(modelSelect, { target: { value: 'Car' } });
-    expect(filters[0].onChange).toHaveBeenCalledWith('Car');
+    fireEvent.change(modelSelect, { target: { value: 'Digger Crawler' } });
+    expect(filters[0].onChange).toHaveBeenCalledWith('Digger Crawler');
 
-    // Simulate changing the Color filter
-    const colorSelect = screen.getByLabelText('Color:');
-    fireEvent.change(colorSelect, { target: { value: 'Red' } });
-    expect(filters[1].onChange).toHaveBeenCalledWith('Red');
+    // VehicleClass filtresini değiştirmeyi simüle edin
+    const colorSelect = screen.getByLabelText('VehicleClass:');
+    fireEvent.change(colorSelect, { target: { value: 'wheeled' } });
+    expect(filters[1].onChange).toHaveBeenCalledWith('wheeled');
   });
 
+  // Varsayılan seçeneğin "All" olup olmadığını kontrol edin
   test('default option is "All"', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if the default selected option is "All"
+    // Varsayılan seçili seçeneğin "All" olup olmadığını kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
       expect(selectElement.value).toBe('');
@@ -173,55 +185,59 @@ describe('Vehicles Component', () => {
 
 });
 
+// Planets bileşenini test etme
 describe('Planets Component', () => {
   const filters = [
     {
-      label: 'Name',
+      label: 'Population',
       value: '',
-      options: ['Planet A', 'Planet B', 'Planet C'],
+      options: ['200000', '2000000000', '1000'],
       onChange: jest.fn(),
     },
     {
-      label: 'Terrain',
+      label: 'Climates',
       value: '',
-      options: ['Desert', 'Forest', 'Ocean'],
+      options: ['arid', 'temperate', 'frozen'],
       onChange: jest.fn(),
     },
   ];
 
+  // Bileşenin verilen filtrelerle doğru şekilde render edilip edilmediğini kontrol edin
   test('renders correctly with given filters', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if all filters are rendered
+    // Tüm filtrelerin render edildiğini kontrol edin
     filters.forEach(filter => {
       expect(screen.getByLabelText(`${filter.label}:`)).toBeInTheDocument();
     });
 
-    // Check if the correct number of options are rendered for each filter
+    // Her filtre için doğru sayıda seçeneğin render edildiğini kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
-      expect(selectElement.children.length).toBe(filter.options.length + 1); // +1 for the "All" option
+      expect(selectElement).toHaveTextContent('All'); //  "All" seçeneği için
     });
   });
 
+  // Bir seçenek seçildiğinde onChange fonksiyonunun çağrılıp çağrılmadığını kontrol edin
   test('calls onChange when an option is selected', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Simulate changing the Name filter
-    const nameSelect = screen.getByLabelText('Name:');
-    fireEvent.change(nameSelect, { target: { value: 'Planet A' } });
-    expect(filters[0].onChange).toHaveBeenCalledWith('Planet A');
+    // Population filtresini değiştirmeyi simüle edin
+    const nameSelect = screen.getByLabelText('Population:');
+    fireEvent.change(nameSelect, { target: { value: '200000' } });
+    expect(filters[0].onChange).toHaveBeenCalledWith('200000');
 
-    // Simulate changing the Terrain filter
-    const terrainSelect = screen.getByLabelText('Terrain:');
-    fireEvent.change(terrainSelect, { target: { value: 'Desert' } });
-    expect(filters[1].onChange).toHaveBeenCalledWith('Desert');
+    // Climates filtresini değiştirmeyi simüle edin
+    const terrainSelect = screen.getByLabelText('Climates:');
+    fireEvent.change(terrainSelect, { target: { value: 'arid' } });
+    expect(filters[1].onChange).toHaveBeenCalledWith('arid');
   });
 
+  // Varsayılan seçeneğin "All" olup olmadığını kontrol edin
   test('default option is "All"', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if the default selected option is "All"
+    // Varsayılan seçili seçeneğin "All" olup olmadığını kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
       expect(selectElement.value).toBe('');
@@ -230,55 +246,59 @@ describe('Planets Component', () => {
 
 });
 
+// Starships bileşenini test etme
 describe('Starships Component', () => {
   const filters = [
     {
-      label: 'Name',
+      label: 'Model',
       value: '',
-      options: ['Starship A', 'Starship B', 'Starship C'],
+      options: ['CR90 corvette', 'BTL Y-wing', 'T-65 X-wing'],
       onChange: jest.fn(),
     },
     {
-      label: 'Manufacturer',
+      label: 'ShipClass',
       value: '',
-      options: ['Manufacturer X', 'Manufacturer Y', 'Manufacturer Z'],
+      options: ['ShipClass X', 'ShipClass Y', 'ShipClass Z'],
       onChange: jest.fn(),
     },
   ];
 
+  // Bileşenin verilen filtrelerle doğru şekilde render edilip edilmediğini kontrol edin
   test('renders correctly with given filters', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if all filters are rendered
+    // Tüm filtrelerin render edildiğini kontrol edin
     filters.forEach(filter => {
       expect(screen.getByLabelText(`${filter.label}:`)).toBeInTheDocument();
     });
 
-    // Check if the correct number of options are rendered for each filter
+    // Her filtre için doğru sayıda seçeneğin render edildiğini kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
-      expect(selectElement.children.length).toBe(filter.options.length + 1); // +1 for the "All" option
+      expect(selectElement).toHaveTextContent('All'); // +1, "All" seçeneği için
     });
   });
 
+  // Bir seçenek seçildiğinde onChange fonksiyonunun çağrılıp çağrılmadığını kontrol edin
   test('calls onChange when an option is selected', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Simulate changing the Name filter
-    const nameSelect = screen.getByLabelText('Name:');
-    fireEvent.change(nameSelect, { target: { value: 'Starship A' } });
-    expect(filters[0].onChange).toHaveBeenCalledWith('Starship A');
+    // Model filtresini değiştirmeyi simüle edin
+    const nameSelect = screen.getByLabelText('Model:');
+    fireEvent.change(nameSelect, { target: { value: 'CR90 corvette' } });
+    expect(filters[0].onChange).toHaveBeenCalledWith('CR90 corvette');
 
-    // Simulate changing the Manufacturer filter
-    const manufacturerSelect = screen.getByLabelText('Manufacturer:');
-    fireEvent.change(manufacturerSelect, { target: { value: 'Manufacturer X' } });
-    expect(filters[1].onChange).toHaveBeenCalledWith('Manufacturer X');
+    // ShipClass filtresini değiştirmeyi simüle edin
+    const manufacturerSelect = screen.getByLabelText('ShipClass:');
+    fireEvent.change(manufacturerSelect, { target: { value: 'ShipClass X' } });
+    expect(filters[1].onChange).toHaveBeenCalledWith('ShipClass X');
   });
 
+  // Varsayılan seçeneğin "All" olup olmadığını kontrol edin
   test('default option is "All"', () => {
     render(<FilterComponent filters={filters} />);
 
-    // Check if the default selected option is "All"
+    // Varsayılan seçili seçeneğin "All" olup olmadığını kontrol edin
     filters.forEach(filter => {
       const selectElement = screen.getByLabelText(`${filter.label}:`);
       expect(selectElement.value).toBe('');

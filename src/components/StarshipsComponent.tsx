@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { saveAs } from 'file-saver';
-import * as XLSX from 'xlsx';
-import PaginationComponent from './PaginationComponent.tsx';
-import FilterComponent from './FilterComponent.tsx';
-import ExcelComponent from './ExcelComponent.tsx';
+
+import PaginationComponent from './PaginationComponent';
+import FilterComponent from './FilterComponent';
+import ExcelComponent from './ExcelComponent';
 
 const GET_ALL_DATA = gql`
   query AllStarShips {

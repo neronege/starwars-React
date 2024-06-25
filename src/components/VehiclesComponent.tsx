@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import FilterComponent from './FilterComponent.tsx';
-import PaginationComponent from './PaginationComponent.tsx';
-import ExcelComponent from './ExcelComponent.tsx';
+import FilterComponent from './FilterComponent';
+import PaginationComponent from './PaginationComponent';
+import ExcelComponent from './ExcelComponent';
 
 export const GET_ALL_DATA = gql`
   query AllVehicles {
@@ -35,13 +35,13 @@ const VehiclesComponent: React.FC = () => {
   if (error) return <p>Error: {error.message}</p>;
 
   console.log('Data from API:', data);
-  modelOptions = Array.from(new Set(data.allVehicles.vehicles.map(vehicle => vehicle.model)));
-  vehicleClassOptions = Array.from(new Set(data.allVehicles.vehicles.map(vehicle => vehicle.vehicleClass)));
+  modelOptions = Array.from(new Set(data.allVehicles.vehicles.map((vehicle:any) => vehicle.model)));
+  vehicleClassOptions = Array.from(new Set(data.allVehicles.vehicles.map((vehicle:any) => vehicle.vehicleClass)));
 
   // Verileri doğru şekilde sayfalama için hesaplamalar
   const indexOfLastItem = currentPage * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
-  const filteredVehicles = data.allVehicles.vehicles.filter(vehicle => {
+  const filteredVehicles = data.allVehicles.vehicles.filter((vehicle:any) => {
     // Filtreleme işlemleri burada gerçekleştirilecek
     if (filtervehicleClass && vehicle.vehicleClass !== filtervehicleClass) return false;
     if (filterModel && vehicle.model !== filterModel) return false;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ExcelComponent from './ExcelComponent';
+import ExcelComponent from './components/ExcelComponent';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
@@ -17,6 +17,8 @@ jest.mock('xlsx', () => {
     write: jest.fn().mockReturnValue(new Uint8Array()),
   };
 });
+
+
 
 describe('ExcelComponent', () => {
   const data = [

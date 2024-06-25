@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import FilterComponent from './FilterComponent.tsx';
-import PaginationComponent from './PaginationComponent.tsx';
-import ExcelComponent from './ExcelComponent.tsx';
+import FilterComponent from './FilterComponent';
+import PaginationComponent from './PaginationComponent';
+import ExcelComponent from './ExcelComponent';
 
 const GET_ALL_DATA = gql`
   query AllFilms {
@@ -36,13 +36,13 @@ const FilmsComponent: React.FC = () => {
   console.log('Data from API:', data);
 
   // Direktör seçeneklerini ve Episode ID seçeneklerini oluşturma
-  directorOptions = Array.from(new Set(data.allFilms.films.map(film => film.director)));
-  episodeIDOptions = Array.from(new Set(data.allFilms.films.map(film => film.episodeID)));
+  directorOptions = Array.from(new Set(data.allFilms.films.map((film:any) => film.director)));
+  episodeIDOptions = Array.from(new Set(data.allFilms.films.map((film:any) => film.episodeID)));
 
   // Verileri doğru şekilde sayfalama için hesaplamalar
   const indexOfLastItem = currentPage * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
-  const filteredFilms = data.allFilms.films.filter(film => {
+  const filteredFilms = data.allFilms.films.filter((film:any) => {
     // Filtreleme işlemleri burada gerçekleştirilecek
     if (filterEpisodeID !== -1 && film.episodeID !== filterEpisodeID) return false;
     if (filterDirector && film.director !== filterDirector) return false;
@@ -91,7 +91,7 @@ const FilmsComponent: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((film, index) => (
+            {currentItems.map((film:any, index:any) => (
               <tr key={index}>
                 <td>{film.title}</td>
                 <td>{film.episodeID}</td>

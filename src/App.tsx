@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import PeopleComponent from './components/People.tsx';
-import PlanetsComponent from './components/PlantesComponent.tsx';
-import FilmsComponent from './components/FilmsComponent.tsx';
-import StarshipsComponent from './components/StarshipsComponent.tsx';
-import VehiclesComponent from './components/VehiclesComponent.tsx';
+import PeopleComponent from './components/People';
+import PlanetsComponent from './components/PlantesComponent';
+import FilmsComponent from './components/FilmsComponent';
+import StarshipsComponent from './components/StarshipsComponent';
+import VehiclesComponent from './components/VehiclesComponent';
 
 
 const App: React.FC = () => {

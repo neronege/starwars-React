@@ -7,6 +7,9 @@ interface PaginationComponentProps {
 }
 
 const PaginationComponent: React.FC<PaginationComponentProps> = ({ currentPage, totalPages, paginate }) => {
+
+  //Bu iç içe fonksiyon, mevcut sayfa numarasına ve 
+  //toplam sayfa sayısına göre sayfa numaralarını hesaplar ve bir dizi olarak döndürür
   const getPageNumbers = (): number[] => {
     const pageNumbers: number[] = [];
     if (totalPages <= 3) {

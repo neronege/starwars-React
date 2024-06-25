@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { gql } from '@apollo/client';
-import FilterComponent from './FilterComponent.tsx';
-import PaginationComponent from './PaginationComponent.tsx';
-import ExcelComponent from './ExcelComponent.tsx';
+import FilterComponent from './FilterComponent';
+import PaginationComponent from './PaginationComponent';
+import ExcelComponent from './ExcelComponent';
 
 export const GET_ALL_DATA = gql`
   query AllPlanets {
@@ -36,13 +36,13 @@ const PlanetsComponent: React.FC = () => {
 
   console.log('Data from API:', data);
   // Nüfus seçeneklerini ve iklim seçeneklerini oluşturma
-  populationOptions = Array.from(new Set(data.allPlanets.planets.map(planet => parseInt(planet.population)).filter(population => !isNaN(population))));
-  climatesOptions = Array.from(new Set(data.allPlanets.planets.flatMap(planet => planet.climates)));
+  populationOptions = Array.from(new Set(data.allPlanets.planets.map((planet:any) => parseInt(planet.population)).filter((population:any) => !isNaN(population))));
+  climatesOptions = Array.from(new Set(data.allPlanets.planets.flatMap((planet:any) => planet.climates)));
 
   // Verileri doğru şekilde sayfalama için hesaplamalar
   const indexOfLastItem = currentPage * perPage;
   const indexOfFirstItem = indexOfLastItem - perPage;
-  const filteredplanets = data.allPlanets.planets.filter(planet => {
+  const filteredplanets = data.allPlanets.planets.filter((planet:any) => {
     // Filtreleme işlemleri burada gerçekleştirilecek
     if (filterclimates && !planet.climates.includes(filterclimates)) return false;
     if (filterpopulation !== -1 && parseInt(planet.population) !== filterpopulation) return false;
